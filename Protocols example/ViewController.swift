@@ -8,13 +8,34 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CanRecive {
+   
+    
 
+    @IBOutlet weak var textLabel: UILabel!
+    @IBOutlet weak var textfieldData: UITextField!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
 
-
+    @IBAction func transferDataButton(_ sender: UIButton) {
+        
+        performSegue(withIdentifier: "showSecondScreen", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showSecondScreen" {
+            let secondVC = segue.destination as! SecondViewController
+            secondVC.data = textfieldData.text!
+            secondVC.delegate = self
+        }
+    }
+    
+    func dataRecived(data: String) {
+        textLabel.text = data
+       }
+    
 }
 
